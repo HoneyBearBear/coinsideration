@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ name.capitalize() }}
+{% endblock %}
+
+{% block main %}
+    {% for v in metadata.data.values() %}
+        <div class="card">
+            <div class="card-body">
+                <img src="{{ v.logo }}" class="coin-logo" alt="coin logo" width="64px">
+                <h1 class="logo-text">{{ v.name }} ({{v.symbol}})</h1>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <table>
+                    {% for v in quote.data.values() %}
+                    <tr>
+                        <td><strong><p>Last Price:</p></strong></td>
+                        {% if v.quote.USD.price >= 1 %}
+                            <td><p>&emsp;${{ "%.2f"|format(v.quote.USD.price) }}</p></td>
+                        {% elif v.quote.USD.price > 0.0001 %}
+                            <td><p>&emsp;${{ "%.4f"|format(v.quote.USD.price) }}</p></td>
+                        {% else %}
+                            <td><p>&emsp;${{ "%.9f"|format(v.quote.USD.price) }}</p></td>
+                        {% endif %}
+                    </tr>                            <tr>
+                        <td><strong><p>Circulating Supply:</p></strong></td>
+                        <td><p>&emsp;{{ v.circulating_supply|round|int }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><strong><p>Total Supply:</p></strong></td>
+                        <td><p>&emsp;{{ v.total_supply|round|int }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><strong><p>Max Supply:</p></strong></td>
+                        <td><p>&emsp;{{ v.max_supply }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><strong><p> Market Cap:</p></strong></td>
+                        <td><p>&emsp;${{ "%.2f"|format(v.quote.USD.market_cap) }}</p></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>So what's {{ v.name }}?</h3>
+                <p class="lead">{{ v.description }}</p>
+                <p class="lead"><a href={{ v.urls.technical_doc.0 }} target="_blank">White Paper / Technical Doc</a></p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3>The White Paper and You</h3>
+                <p class="lead">{{ v.name }}'s <a target='_blank' href={{ v.urls.technical_doc.0 }}>white paper or technical document</a> should be a key factor for your <a href="/">"coinsideration"</a>. Depending on the cryptocurrency, the technical document may also be referred to using colors other than the original standard white paper, but the key takeaway is the same. If a cryptocurrency doesn't have one, or if the document is lacking in detail, doesn't make much sense, or is possibly shady, it should be a red flag for you to continue with your due diligence. This will help avert the risk presented in the absence of the document, or through a poorly or deceptively written document that leaves you with more questions than answers.</p>
+                <p><em><strong><span style="color:red;">A word of caution</span></strong>, as time passes, and improvements and updates are made. These documents have a tendency to move location, or disappear altogether. With that being said, it is solely on you to perform the due diligence in searching for each technical document and ensuring you have the most up to date documentation on each cryptocurrency in <a href="/"> "coinsideration"</a> of your prospective investment.</em></p>
+                <p>If you don't see a white paper or technical doc outlining what it is, what it does, and how it works, then find it if you can. If you can't find it, and neither can anyone else, then maybe coinsider something else as an investment opportunity.</p>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
